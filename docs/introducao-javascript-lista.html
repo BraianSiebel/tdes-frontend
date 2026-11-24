@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Introdução ao JavaScript - Lista de exercícios</title>
+<style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.45;margin:0 8mm;color:#111}h1{font-size:17pt;margin-bottom:2px}h2{font-size:13pt;margin-top:18px;border-bottom:1px solid #999}h3{font-size:11pt;margin:14px 0 2px}pre{background:#f4f4f4;border:1px solid #ddd;padding:8px;font-size:8.5pt;white-space:pre-wrap;page-break-inside:avoid}.arq{font-size:9pt;color:#555;margin:0}.sub{color:#444}</style></head><body>
+<h1>Introdução ao JavaScript — Lista de exercícios</h1>
+<p class="sub">Desenvolvimento Front-End · ADS · ULBRA · Braian Lisandro Siebel · 2026/2</p>
+<h2>1 - Principal utilidade do JavaScript no front-end</h2>
+<p><strong>Resposta: C) ADICIONAR interatividade e comportamento dinâmico à página.</strong> O HTML estrutura o conteúdo e o CSS cuida da aparência; o JavaScript reage às ações do usuário (cliques, digitação, envio de formulários), altera o conteúdo da página sem recarregá-la e se comunica com APIs. Gerenciar bancos de dados no servidor é papel do back-end.</p>
+<h2>2 - Diferença entre let e const</h2>
+<p>As duas declaram variáveis com escopo de bloco (valem só dentro das chaves onde foram criadas). A diferença é que uma variável declarada com <strong>let</strong> pode receber um novo valor depois, enquanto uma declarada com <strong>const</strong> não pode ser reatribuída e precisa ser inicializada na declaração. (Se a const guarda um objeto ou array, o conteúdo interno ainda pode mudar; o que não muda é a referência.)</p>
+<pre>// let: valor que muda, como um contador ou um acumulador
+let soma = 0;
+for (let i = 1; i &lt;= 5; i++) {
+    soma += i;
+}
+
+// const: valor que não deve mudar, como a média para aprovação
+const MEDIA_APROVACAO = 6;
+const botao = document.getElementById("calcular");</pre>
+<p>Regra prática: usar <strong>const</strong> por padrão e <strong>let</strong> apenas quando a variável realmente precisar ser reatribuída.</p>
+<h2>3 - Incluindo um arquivo JavaScript externo</h2>
+<p>Usando a tag <code>&lt;script&gt;</code> com o atributo <code>src</code> apontando para o arquivo:</p>
+<pre>&lt;script src="script.js"&gt;&lt;/script&gt;</pre>
+<p>O local mais comum é <strong>no final do <code>&lt;body&gt;</code>, logo antes de <code>&lt;/body&gt;</code></strong>. Assim o navegador carrega e mostra todo o HTML primeiro, a página aparece mais rápido para o usuário, e quando o script roda todos os elementos já existem, então funções como <code>document.getElementById</code> encontram o que precisam. Outra opção moderna é colocar no <code>&lt;head&gt;</code> com o atributo <code>defer</code>, que tem o mesmo efeito de esperar o HTML ser lido.</p>
+<h2>Exercícios 4 a 10 (prompt e alert)</h2>
+<p>Cada exercício está em um arquivo .js separado, todos importados no index.html. Cada botão da página chama a função do exercício. Código completo também em: https://github.com/BraianSiebel/tdes-frontend/tree/main/tde-exercicios-javascript</p>
+<h3>index.html</h3><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;TDE - Introdução ao JavaScript&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+        button { display: block; width: 100%; margin: 8px 0; padding: 12px; font-size: 16px; cursor: pointer; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Introdução ao JavaScript — Lista de exercícios&lt;/h1&gt;
+    &lt;p&gt;Braian Siebel · Desenvolvimento Front-End. Clique em um exercício: os dados são lidos com &lt;code&gt;prompt&lt;/code&gt; e o resultado aparece com &lt;code&gt;alert&lt;/code&gt;.&lt;/p&gt;
+
+    &lt;button onclick=&quot;exercicio1()&quot;&gt;1 - Multiplicação de dois números&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio2()&quot;&gt;2 - Par ou ímpar / positivo ou negativo&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio3()&quot;&gt;3 - Maior de idade&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio4()&quot;&gt;4 - Tabuada&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio5()&quot;&gt;5 - Média de três notas&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio6()&quot;&gt;6 - Dia da semana&lt;/button&gt;
+    &lt;button onclick=&quot;exercicio7()&quot;&gt;7 - Média até digitar um negativo&lt;/button&gt;
+
+    &lt;script src=&quot;js/exercicio1.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio2.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio3.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio4.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio5.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio6.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/exercicio7.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<h3>4 - Leia dois números e apresente a multiplicação deles.</h3><p class="arq">Arquivo: js/exercicio1.js</p><pre>// 1 - Leia dois números e apresente a multiplicação deles.
+function exercicio1() {
+    const numero1 = Number(prompt(&quot;Digite o primeiro número:&quot;));
+    const numero2 = Number(prompt(&quot;Digite o segundo número:&quot;));
+
+    if (isNaN(numero1) || isNaN(numero2)) {
+        alert(&quot;Digite apenas números válidos.&quot;);
+        return;
+    }
+
+    alert(numero1 + &quot; x &quot; + numero2 + &quot; = &quot; + (numero1 * numero2));
+}
+</pre><h3>5 - Leia um número e informe se é par ou ímpar e se é positivo ou negativo.</h3><p class="arq">Arquivo: js/exercicio2.js</p><pre>// 2 - Leia um número e informe se é par ou ímpar e se é positivo ou negativo.
+function exercicio2() {
+    const numero = Number(prompt(&quot;Digite um número inteiro:&quot;));
+
+    if (isNaN(numero) || !Number.isInteger(numero)) {
+        alert(&quot;Digite um número inteiro válido.&quot;);
+        return;
+    }
+
+    const paridade = numero % 2 === 0 ? &quot;par&quot; : &quot;ímpar&quot;;
+    let sinal;
+    if (numero &gt; 0) {
+        sinal = &quot;positivo&quot;;
+    } else if (numero &lt; 0) {
+        sinal = &quot;negativo&quot;;
+    } else {
+        sinal = &quot;zero (nem positivo nem negativo)&quot;;
+    }
+
+    alert(&quot;O número &quot; + numero + &quot; é &quot; + paridade + &quot; e &quot; + sinal + &quot;.&quot;);
+}
+</pre><h3>6 - Leia o nome e a idade e informe se a pessoa é maior de idade.</h3><p class="arq">Arquivo: js/exercicio3.js</p><pre>// 3 - Leia o nome e a idade e informe se a pessoa é maior de idade.
+function exercicio3() {
+    const nome = prompt(&quot;Digite o seu nome:&quot;);
+    const idade = Number(prompt(&quot;Digite a sua idade:&quot;));
+
+    if (!nome || isNaN(idade) || idade &lt; 0) {
+        alert(&quot;Nome ou idade inválidos.&quot;);
+        return;
+    }
+
+    if (idade &gt;= 18) {
+        alert(nome + &quot; você tem &quot; + idade + &quot; anos, é maior de idade&quot;);
+    } else {
+        alert(nome + &quot; você tem &quot; + idade + &quot; anos, é menor de idade&quot;);
+    }
+}
+</pre><h3>7 - Receba um número e mostre a tabuada.</h3><p class="arq">Arquivo: js/exercicio4.js</p><pre>// 4 - Receba um número e mostre a tabuada dele.
+function exercicio4() {
+    const numero = Number(prompt(&quot;Digite um número para ver a tabuada:&quot;));
+
+    if (isNaN(numero)) {
+        alert(&quot;Digite um número válido.&quot;);
+        return;
+    }
+
+    let tabuada = &quot;Tabuada do &quot; + numero + &quot;:\n&quot;;
+    for (let i = 1; i &lt;= 10; i++) {
+        tabuada += numero + &quot; x &quot; + i + &quot; = &quot; + (numero * i) + &quot;\n&quot;;
+    }
+
+    alert(tabuada);
+}
+</pre><h3>8 - Leia três notas, mostre a média e se o aluno está aprovado (média 6).</h3><p class="arq">Arquivo: js/exercicio5.js</p><pre>// 5 - Leia três notas, mostre a média e se o aluno foi aprovado (média 6).
+function exercicio5() {
+    const nota1 = Number(prompt(&quot;Digite a primeira nota:&quot;));
+    const nota2 = Number(prompt(&quot;Digite a segunda nota:&quot;));
+    const nota3 = Number(prompt(&quot;Digite a terceira nota:&quot;));
+
+    if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
+        alert(&quot;Digite notas válidas.&quot;);
+        return;
+    }
+
+    const media = (nota1 + nota2 + nota3) / 3;
+    const situacao = media &gt;= 6 ? &quot;Aprovado&quot; : &quot;Reprovado&quot;;
+
+    alert(&quot;Média: &quot; + media.toFixed(2) + &quot;\nSituação: &quot; + situacao);
+}
+</pre><h3>9 - Leia um número de 1 a 7 e mostre o dia da semana.</h3><p class="arq">Arquivo: js/exercicio6.js</p><pre>// 6 - Leia um número de 1 a 7 e mostre o dia da semana (1 = domingo, 7 = sábado).
+function exercicio6() {
+    const numero = Number(prompt(&quot;Digite um número de 1 a 7:&quot;));
+
+    switch (numero) {
+        case 1: alert(&quot;Domingo&quot;); break;
+        case 2: alert(&quot;Segunda-feira&quot;); break;
+        case 3: alert(&quot;Terça-feira&quot;); break;
+        case 4: alert(&quot;Quarta-feira&quot;); break;
+        case 5: alert(&quot;Quinta-feira&quot;); break;
+        case 6: alert(&quot;Sexta-feira&quot;); break;
+        case 7: alert(&quot;Sábado&quot;); break;
+        default: alert(&quot;Número inválido! Digite um valor de 1 a 7.&quot;);
+    }
+}
+</pre><h3>10 - Leia números até um negativo e mostre a média.</h3><p class="arq">Arquivo: js/exercicio7.js</p><pre>// 7 - Leia números até que um negativo seja digitado e mostre a média dos números digitados.
+function exercicio7() {
+    let soma = 0;
+    let quantidade = 0;
+
+    while (true) {
+        const entrada = prompt(&quot;Digite um número (um número negativo encerra):&quot;);
+        if (entrada === null) {
+            break;
+        }
+
+        const numero = Number(entrada);
+        if (isNaN(numero) || entrada.trim() === &quot;&quot;) {
+            alert(&quot;Valor inválido, tente novamente.&quot;);
+            continue;
+        }
+        if (numero &lt; 0) {
+            break;
+        }
+
+        soma += numero;
+        quantidade++;
+    }
+
+    if (quantidade === 0) {
+        alert(&quot;Nenhum número válido foi digitado.&quot;);
+    } else {
+        alert(&quot;Você digitou &quot; + quantidade + &quot; número(s). Média: &quot; + (soma / quantidade).toFixed(2));
+    }
+}
+</pre>
+</body></html>

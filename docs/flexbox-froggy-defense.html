@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Dominando o CSS Flexbox na Prática</title>
+<style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.5;margin:0 8mm;color:#111}h1{font-size:17pt;margin-bottom:2px}h2{font-size:13pt;margin-top:18px;border-bottom:1px solid #999}code,pre{font-family:monospace}pre{background:#f4f4f4;border:1px solid #ddd;padding:8px;font-size:9.5pt}li{margin-bottom:6px}.sub{color:#444}</style></head><body>
+<h1>Atividade Prática: Dominando o CSS Flexbox na Prática</h1>
+<p class="sub">Desenvolvimento Front-End · ADS · ULBRA · Braian Lisandro Siebel · 2026/2<br>Jogos: Flexbox Froggy (flexboxfroggy.com) e Flexbox Defense (flexboxdefense.com)</p>
+
+<h2>1. Resumo das propriedades</h2>
+<ul>
+<li><strong>justify-content</strong>: distribui os itens ao longo do <em>eixo principal</em> do container. Valores como <code>flex-start</code>, <code>flex-end</code> e <code>center</code> juntam os itens no começo, no fim ou no meio; <code>space-between</code> encosta o primeiro e o último nas bordas e divide o espaço entre eles; <code>space-around</code> e <code>space-evenly</code> espalham o espaço também nas pontas. No Froggy era a primeira ferramenta para levar os sapos até as vitórias-régias na horizontal.</li>
+<li><strong>align-items</strong>: alinha os itens no <em>eixo cruzado</em>, ou seja, perpendicular ao principal. Com o padrão <code>row</code>, controla a posição vertical: <code>flex-start</code> (topo), <code>flex-end</code> (base), <code>center</code>, <code>baseline</code> e <code>stretch</code>. Combinar <code>justify-content: center</code> com <code>align-items: center</code> centraliza um item nas duas direções.</li>
+<li><strong>flex-direction</strong>: define qual é o eixo principal e o sentido dele: <code>row</code> (esquerda → direita), <code>row-reverse</code>, <code>column</code> (cima → baixo) e <code>column-reverse</code>. Ao usar as versões <em>reverse</em>, o início e o fim também se invertem, então <code>flex-start</code> passa a apontar para o outro lado.</li>
+<li><strong>align-self</strong>: faz o mesmo que <code>align-items</code>, mas aplicado em um único item, sobrescrevendo o alinhamento do container. Foi usado quando só um sapo (ou uma torre, no Defense) precisava ficar em outra posição do eixo cruzado.</li>
+<li><strong>flex-wrap / flex-flow</strong>: <code>flex-wrap</code> decide se os itens ficam todos em uma linha (<code>nowrap</code>), se quebram para novas linhas (<code>wrap</code>) ou se quebram no sentido inverso (<code>wrap-reverse</code>). <code>flex-flow</code> é o atalho que junta <code>flex-direction</code> e <code>flex-wrap</code> em uma linha só, por exemplo <code>flex-flow: column wrap;</code>.</li>
+<li><strong>order</strong>: muda a ordem visual de um item sem mexer no HTML. Todos começam com <code>order: 0</code>; valores maiores vão para o fim e valores negativos vêm para o começo. No Froggy servia para trocar um sapo de lugar com os outros.</li>
+</ul>
+
+<h2>2. Eixo principal vs. eixo cruzado</h2>
+<p>O Flexbox sempre trabalha com dois eixos. O <strong>principal</strong> é definido pelo <code>flex-direction</code>, e o <strong>cruzado</strong> é o perpendicular a ele. O <code>justify-content</code> age sempre no eixo principal e o <code>align-items</code> sempre no cruzado.</p>
+<p>Com <code>flex-direction: row</code>, o eixo principal é horizontal: <code>justify-content</code> move os itens para os lados e <code>align-items</code> move para cima e para baixo. Quando troco para <code>flex-direction: column</code>, o eixo principal vira vertical, então os papéis se invertem: agora <code>justify-content</code> move os itens para cima e para baixo e <code>align-items</code> passa a controlar a posição horizontal.</p>
+<pre>.container { display: flex; flex-direction: column;
+             justify-content: flex-end;  /* agora empurra para BAIXO */
+             align-items: center; }      /* agora centraliza na HORIZONTAL */</pre>
+<p>Esse foi o ponto que mais confundiu no começo: depois de mudar a direção, o mesmo <code>justify-content: flex-end</code> que levava os sapos para a direita passou a levá-los para baixo. Entender que as propriedades seguem os eixos, e não "horizontal" e "vertical", resolveu as fases seguintes.</p>
+
+<h2>3. Comparativo de estratégia</h2>
+<p>O <strong>Flexbox Defense</strong> exigiu mais raciocínio espacial. No <strong>Froggy</strong> o objetivo é fixo e visível: cada sapo tem uma vitória-régia da mesma cor, então basta descobrir qual combinação de propriedades leva cada item até aquele ponto exato. É um exercício de "mover para um destino".</p>
+<p>No Defense não existe uma posição certa marcada. As torres precisam ficar em lugares de onde o <strong>alcance</strong> delas cubra o caminho por onde os inimigos passam, então eu tinha que observar o mapa, imaginar a área de tiro de cada torre e só então escolher o alinhamento. Além disso, as torres ficam dentro de faixas (containers) diferentes e às vezes uma propriedade que posiciona bem uma torre deixa outra fora do caminho, o que obriga a pensar no conjunto e a usar <code>align-self</code> ou <code>order</code> para ajustes individuais. Ou seja, no Froggy eu posiciono pontos, e no Defense eu posiciono áreas de cobertura.</p>
+
+<h2>4. Desafio superado</h2>
+<p>O nível mais difícil foi a <strong>última fase do Flexbox Froggy (nível 24)</strong>, em que os sapos estão espalhados em várias linhas e colunas e é preciso combinar direção, quebra de linha e distribuição ao mesmo tempo. A lógica que usei foi resolver um eixo por vez:</p>
+<ol>
+<li>Observei que as cores estavam empilhadas de baixo para cima, então o eixo principal precisava ser vertical e invertido: <code>flex-direction: column-reverse</code>.</li>
+<li>As colunas também estavam na ordem contrária (a primeira coluna à direita), por isso a quebra precisava ser invertida: <code>flex-wrap: wrap-reverse</code>. Com <code>flex-flow</code> isso vira <code>flex-flow: column-reverse wrap-reverse</code>.</li>
+<li>Dentro de cada coluna os sapos ficavam no meio, então <code>justify-content: center</code> (que agora atua na vertical).</li>
+<li>Por fim, as colunas estavam encostadas nas bordas com espaço entre elas, o que pedia <code>align-content: space-between</code>, que distribui as <em>linhas</em> no eixo cruzado.</li>
+</ol>
+<pre>#pond { display: flex;
+        flex-flow: column-reverse wrap-reverse;
+        justify-content: center;
+        align-content: space-between; }</pre>
+<p>O que me ajudou foi não tentar acertar tudo de uma vez: depois de cada propriedade eu olhava o feedback visual do jogo para ver o que já estava no lugar e qual eixo ainda faltava ajustar.</p>
+</body></html>
