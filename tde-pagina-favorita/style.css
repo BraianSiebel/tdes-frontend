@@ -1,0 +1,91 @@
+/* ===== Seletores por TAG ===== */
+body {
+    background-color: #1e1e2e;
+    color: #e6e6e6;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 48px;
+    color: #f9c74f;
+    margin: 0 0 8px 0;
+}
+
+h2 {
+    font-size: 28px;
+    color: #90be6d;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+a {
+    color: #4cc9f0;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+li {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+footer {
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+/* ===== Seletores por CLASSE ===== */
+.card {
+    background-color: #2a2a3d;
+    border: 2px solid #44446a;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 auto 20px auto;
+    max-width: 800px;
+}
+
+.introducao {
+    font-size: 20px;
+    font-style: italic;
+}
+
+.destaque {
+    color: #f9c74f;
+    font-weight: bold;
+}
+
+.imagem-pequena {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 3px solid #f9c74f;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: block;
+    margin: 0 auto 12px auto;
+}
+
+/* ===== Seletor por ID ===== */
+#destaque {
+    background-color: #f9c74f;
+    color: #1e1e2e;
+    border: 4px dashed #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 auto 20px auto;
+    max-width: 800px;
+}
+
+#destaque h2 {
+    color: #1e1e2e;
+}

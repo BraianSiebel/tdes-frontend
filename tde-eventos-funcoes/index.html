@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDE - Eventos e Funções</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f4f8; margin: 0; color: #222; }
+        nav { background: #1f3b73; padding: 12px; text-align: center; }
+        nav a { color: #fff; margin: 0 12px; text-decoration: none; font-weight: bold; }
+        main { max-width: 640px; margin: 24px auto; padding: 0 16px; }
+        section { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input { width: 100%; padding: 8px; font-size: 16px; box-sizing: border-box; margin-top: 4px; }
+        button { margin: 12px 6px 0 0; padding: 10px 16px; font-size: 15px; cursor: pointer; border: none; border-radius: 6px; background: #1f3b73; color: #fff; }
+        button.secundario { background: #888; }
+        .resultado { margin-top: 16px; padding: 12px; border-radius: 6px; background: #eef2fb; min-height: 22px; font-weight: bold; }
+        .erro { color: #b00020; font-size: 14px; min-height: 18px; }
+        .aprovado { background: #dff5e3; color: #146c2e; }
+        .reprovado { background: #fde2e2; color: #9b1c1c; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#calculadora">Exercício 1: Calculadora</a>
+        <a href="#notas">Exercício 2: Notas</a>
+    </nav>
+
+    <main>
+        <h1>TDE - Eventos e Funções</h1>
+        <p>Braian Siebel · Desenvolvimento Front-End</p>
+
+        <!-- Exercício 1 -->
+        <section id="calculadora">
+            <h2>Exercício 1: Calculadora Simples</h2>
+            <form onsubmit="return false;">
+                <label for="numero1">Número 1</label>
+                <input type="text" id="numero1" placeholder="Ex.: 10">
+                <label for="numero2">Número 2</label>
+                <input type="text" id="numero2" placeholder="Ex.: 5">
+
+                <button type="button" onclick="somar()">Somar</button>
+                <button type="button" onclick="subtrair()">Subtrair</button>
+                <button type="button" onclick="multiplicar()">Multiplicar</button>
+                <button type="button" onclick="dividir()">Dividir</button>
+                <button type="button" class="secundario" onclick="limparCalculadora()">Limpar</button>
+            </form>
+            <div id="resultadoCalculadora" class="resultado"></div>
+        </section>
+
+        <!-- Exercício 2 -->
+        <section id="notas">
+            <h2>Exercício 2: Cálculo de Nota e Verificação de Aprovação</h2>
+            <form onsubmit="return false;">
+                <label for="ap1">AP1 (0 a 1.5)</label>
+                <input type="text" id="ap1" onblur="validarNota('ap1', 1.5)">
+                <div id="erro-ap1" class="erro"></div>
+
+                <label for="ap2">AP2 (0 a 3)</label>
+                <input type="text" id="ap2" onblur="validarNota('ap2', 3)">
+                <div id="erro-ap2" class="erro"></div>
+
+                <label for="as">AS (0 a 5.5)</label>
+                <input type="text" id="as" onblur="validarNota('as', 5.5)">
+                <div id="erro-as" class="erro"></div>
+
+                <button type="button" onclick="calcularNotaFinal()">Calcular nota final</button>
+            </form>
+            <div id="resultadoNotas" class="resultado"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
